@@ -589,7 +589,7 @@ const daysUntilHarvest = computed(() => {
   return getDaysUntilHarvest(planting.value.expectedHarvestDate)
 })
 
-const recommendedCrop = computed(() => {
+const recommendedCrop = computed((): CropType | null => {
   if (!field.value) return null
   const rec = generateFieldRecommendation(field.value, plantingsStore.plantings, harvestsStore.harvests)
   return rec.recommendedCrop
@@ -677,7 +677,7 @@ const setFieldResting = () => {
 }
 
 const confirmRest = () => {
-  if (field.value) {
+  if (field.value && restDate.value) {
     fieldsStore.updateField(field.value.id, { status: 'Отдыхает', nextPlantingDate: new Date(restDate.value) })
     showRestModal.value = false
   }

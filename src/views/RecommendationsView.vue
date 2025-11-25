@@ -210,6 +210,7 @@ import { defineComponent, computed } from 'vue'
 import { useFieldsStore } from '@/stores/fields'
 import { usePlantingsStore } from '@/stores/plantings'
 import { useFertilizationsStore } from '@/stores/fertilizations'
+import { useHarvestsStore } from '@/stores/harvests'
 import { 
   CROP_ROTATION_RULES, 
   generateFieldRecommendation, 
@@ -222,6 +223,7 @@ export default defineComponent({
     const fieldsStore = useFieldsStore()
     const plantingsStore = usePlantingsStore()
     const fertilizationsStore = useFertilizationsStore()
+    const harvestsStore = useHarvestsStore()
 
     const cropRotationRules = CROP_ROTATION_RULES
 
@@ -229,14 +231,14 @@ export default defineComponent({
       return generateGeneralRecommendations(
         fieldsStore.fields,
         plantingsStore.plantings,
-        plantingsStore.harvests,
+        harvestsStore.harvests,
         fertilizationsStore.fertilizations
       )
     })
 
     const fieldRecommendations = computed(() => {
-      return fieldsStore.fields.map(field => 
-        generateFieldRecommendation(field, plantingsStore.plantings, plantingsStore.harvests)
+      return fieldsStore.fields.map(field =>
+        generateFieldRecommendation(field, plantingsStore.plantings, harvestsStore.harvests)
       )
     })
 

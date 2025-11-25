@@ -376,7 +376,7 @@ export function generateGeneralRecommendations(
 
       recommendations.push({
         title: `Внести удобрения ${date.toLocaleDateString('ru-RU')}`,
-        description: `Поля: ${fieldNames}. Удобрения: ${ferts.map(f => f.fertilizerName).join(', ')}.`,
+        description: `Поля: ${fieldNames.join(', ')}. Удобрения: ${ferts.map(f => f.fertilizerName).join(', ')}.`,
         priority: "medium",
         category: "fertilizer",
       })
