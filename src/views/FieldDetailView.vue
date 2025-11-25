@@ -592,7 +592,7 @@ const daysUntilHarvest = computed(() => {
 const recommendedCrop = computed((): CropType | null => {
   if (!field.value) return null
   const rec = generateFieldRecommendation(field.value, plantingsStore.plantings, harvestsStore.harvests)
-  return rec.recommendedCrop
+  return rec!.recommendedCrop
 })
 
 const submitPlanting = () => {
@@ -677,9 +677,12 @@ const setFieldResting = () => {
 }
 
 const confirmRest = () => {
-  if (field.value && restDate.value) {
-    fieldsStore.updateField(field.value.id, { status: 'Отдыхает', nextPlantingDate: new Date(restDate.value) })
-    showRestModal.value = false
+  if (field.value) {
+    const dateStr = restDate.value
+    if (dateStr) {
+      fieldsStore.updateField(field.value.id, { status: 'Отдыхает', nextPlantingDate: new Date(dateStr) })
+      showRestModal.value = false
+    }
   }
 }
 
