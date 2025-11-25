@@ -596,8 +596,8 @@ const recommendedCrop = computed((): CropType | null => {
 })
 
 const submitPlanting = () => {
-  if (!field.value) return
-  
+  if (!field.value || !plantingForm.plantingDate) return
+
   const plantingDate = new Date(plantingForm.plantingDate)
   const expectedHarvestDate = calculateHarvestDate(plantingDate, plantingForm.crop)
   
@@ -620,7 +620,7 @@ const submitPlanting = () => {
   plantingForm.seedProducer = ''
   plantingForm.plantingArea = 0
   plantingForm.seedAmount = 0
-  plantingForm.plantingDate = new Date().toISOString().split('T')[0]
+  plantingForm.plantingDate = new Date().toISOString().substring(0, 10)
 
   showPlantingModal.value = false
 }
@@ -641,8 +641,8 @@ const submitHarvest = () => {
 }
 
 const submitFertilizer = () => {
-  if (!planting.value) return
-  
+  if (!planting.value || !fertilizerForm.applicationDate) return
+
   fertilizationsStore.addFertilization({
     plantingId: planting.value.id,
     fertilizerType: fertilizerForm.fertilizerType,
@@ -662,7 +662,7 @@ const submitFertilizer = () => {
 const setFieldResting = () => {
   if (field.value) {
     const history = getFieldHistory(field.value.id, plantingsStore.plantings, harvestsStore.harvests)
-    const lastCrop = history.length > 0 ? history[0].crop : null
+    const lastCrop = history[0]?.crop || null
     let recommendedDate = new Date()
     if (lastCrop) {
       const rule = CROP_ROTATION_RULES[lastCrop]
@@ -670,7 +670,7 @@ const setFieldResting = () => {
     } else {
       recommendedDate.setFullYear(recommendedDate.getFullYear() + 1)
     }
-    recommendedRestDate.value = recommendedDate.toISOString().split('T')[0]
+    recommendedRestDate.value = recommendedDate.toISOString().substring(0, 10)
     restDate.value = recommendedRestDate.value
     showRestModal.value = true
   }

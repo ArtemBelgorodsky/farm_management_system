@@ -44,7 +44,8 @@ export const useFarmersStore = defineStore("farmers", () => {
   const updateFarmer = (id: string, updates: Partial<Farmer>) => {
     const index = farmers.value.findIndex((f) => f.id === id)
     if (index !== -1) {
-      farmers.value[index] = { ...farmers.value[index], ...updates }
+      const filteredUpdates = Object.fromEntries(Object.entries(updates).filter(([_, v]) => v !== undefined))
+      farmers.value[index] = { ...farmers.value[index], ...filteredUpdates } as Farmer
     }
   }
 

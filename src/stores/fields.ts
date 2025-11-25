@@ -57,7 +57,8 @@ export const useFieldsStore = defineStore("fields", () => {
   const updateField = (id: string, updates: Partial<Field>) => {
     const index = fields.value.findIndex((f) => f.id === id)
     if (index !== -1) {
-      fields.value[index] = { ...fields.value[index], ...updates }
+      const filteredUpdates = Object.fromEntries(Object.entries(updates).filter(([_, v]) => v !== undefined))
+      fields.value[index] = { ...fields.value[index], ...filteredUpdates } as Field
     }
   }
 

@@ -1,4 +1,4 @@
-import type { CropType, SoilType, Field, Planting, Harvest, Recommendation, CropRotationRule } from "../types"
+import type { CropType, SoilType, Field, Planting, Harvest, Recommendation, CropRotationRule, Fertilization } from "../types"
 import { BASE_YIELDS, SOIL_COEFFICIENTS } from "./calculations"
 
 // Правила севооборота - что за чем можно сажать
@@ -367,8 +367,9 @@ export function generateGeneralRecommendations(
 
     for (const dateKey in grouped) {
       const ferts = grouped[dateKey]
+      if (!ferts) continue
       const date = new Date(dateKey)
-      const fieldNames = ferts.map(f => {
+      const fieldNames = ferts.map((f: Fertilization) => {
         const planting = plantings.find(p => p.id === f.plantingId)
         const field = planting ? fields.find(fld => fld.id === planting.fieldId) : null
         return field ? field.name : 'неизвестное поле'
@@ -376,7 +377,7 @@ export function generateGeneralRecommendations(
 
       recommendations.push({
         title: `Внести удобрения ${date.toLocaleDateString('ru-RU')}`,
-        description: `Поля: ${(fieldNames as string[]).join(', ')}. Удобрения: ${(ferts.map(f => f.fertilizerName) as string[]).join(', ')}.`,
+        description: `Поля: ${fieldNames}. Удобрения: ${ferts.map(f => f.fertilizerName).join(', ')}.`,
         priority: "medium",
         category: "fertilizer",
       })

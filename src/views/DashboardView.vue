@@ -173,7 +173,7 @@ const stats = computed(() => [
 ])
 
 const upcomingTasks = computed(() => {
-  const tasks = []
+  const tasks: Array<{type: string, title: string, description: string, icon: any, bgColor: string, iconColor: string}> = []
 
   // Поля готовые к сбору
   const readyFields = fieldsStore.fields.filter(f => f.status === 'Готово к сбору')
