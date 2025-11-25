@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Природная палитра для агро-тематики */
+  --color-primary: #22c55e;
+  --color-primary-dark: #16a34a;
+  --color-secondary: #eab308;
+  --color-accent: #3b82f6;
+
+  --color-background: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-dark: #f5f5f4;
+
+  --color-text: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted: #78716c;
+
+  --color-border: #e7e5e4;
+  --color-border-hover: #d6d3d1;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+#app {
+  min-height: 100vh;
+}
